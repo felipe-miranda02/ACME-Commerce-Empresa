@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  base_url: `https://localhost:7255/api`,
+  base_url: `https://acmecommerce20231127214815.azurewebsites.net/api`,
 };
 
 /*
