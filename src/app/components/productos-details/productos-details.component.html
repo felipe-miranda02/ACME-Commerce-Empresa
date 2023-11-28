@@ -1,0 +1,113 @@
+<div class="card" style="margin: 1rem;">
+    <div class="card-header">
+      <h3>{{ product.titulo }}</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4">
+          <img *ngIf="product.imagen !== '' " src="{{product.imagen}}" class="img-fluid" alt="{{ product.titulo }}">
+          <img *ngIf="product.imagen === ''" src="https://ingeniosas.org/wp-content/plugins/bb-plugin/img/no-image.png" class="img-fluid" alt="null">
+        </div>
+        <div class="col-md-8">
+          <p><strong>Descripción:</strong> {{ product.descripcion }}</p>
+          <p><strong>Precio:</strong> ${{ product.precio }}</p>
+          <p><strong>Categoría:</strong> {{ product.categoria.nombre }}</p>
+          <p><strong>Embalaje Reciclable:</strong> {{ product.embalajeReciclable ? 'Sí' : 'No' }}</p>
+          <p><strong>Producto Reciclable:</strong> {{ product.productoReciclable ? 'Sí' : 'No' }}</p>
+          <p><strong>Fabricación Responsable:</strong> {{ product.fabricacionResponsable ? 'Sí' : 'No' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <h2 style="text-align: center; margin-top: 1rem;">Calificaciones</h2>
+  <ul class="list-group" style="margin: 2rem;">
+    <li class="list-group-item" *ngFor="let calificacion of product.calificaciones">
+      {{ calificacion.cliente.nombre}}: {{ calificacion.titulo }} - {{ calificacion.valoracion }} estrellas
+      <br>
+      {{ calificacion.descripcion }}
+    </li>
+  </ul>
+  
+  <h2 style="text-align: center; margin-top: 1rem;">Productos Relacionados</h2>
+  
+  <div class="d-flex justify-content-center row">
+    <div class="col-md-10">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>categoria</th>
+                <th>Detalles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let producto of product.crossSelling">
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.titulo }}</td>
+                <td>{{ producto.precio | currency }}</td>
+                <td>{{ producto.categoria.nombre }}</td>
+                
+                <td>
+                <a [routerLink]="['/productos/detalles/', producto.id]">
+                    <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+                    </svg>
+                    </button>
+                </a>
+                </td>
+                    
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h2 style="text-align: center; margin-top: 1rem;">Up selling</h2>
+  
+  <div class="d-flex justify-content-center row">
+    <div class="col-md-10">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>categoria</th>
+                <th>Detalles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let producto of product.upSelling">
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.titulo }}</td>
+                <td>{{ producto.precio | currency }}</td>
+                <td>{{ producto.categoria.nombre }}</td>
+                
+                <td>
+                <a [routerLink]="['/productos/detalles/', producto.id]">
+                    <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+                    </svg>
+                    </button>
+                </a>
+                </td>
+                    
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+ 
+  
+    
+  
+  

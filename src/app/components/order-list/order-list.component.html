@@ -1,0 +1,113 @@
+<div class="container">
+  <h2 style="margin: 1rem;">Ordenes</h2>
+
+  <form (ngSubmit)="callGetOrdenes(1)">
+    <div class="form-group">
+      <label for="estado">Estado:</label>
+      <select id="estado" name="estado" [(ngModel)]="estado" class="form-control" style="margin-top: 1rem" required>
+        <option value="1">Creada</option>
+        <option value="2">Empacado</option>
+        <option value="3">En Centro de Envíos</option>
+        <option value="4">En Tránsito</option>
+        <option value="5">Recibido</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 1rem">Confirmar</button>
+  </form>
+
+  <table class="table" style="margin-top: 1rem">
+    <thead>
+      <tr>
+        <th>ID de Pedido</th>
+        <th>Fecha de Compra</th>
+        <th>Costo Total</th>
+        <th>Estado</th>
+        <th>Método de Pago</th>
+        <th>Dirección de Entrega</th>
+        <th>Servicio de Entrega</th>
+        <th>Detalles</th>
+        <th>Editar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let orden of ordenes">
+        <td>{{ orden.id }}</td>
+        <td>{{ ordenService.obtenerFecha(orden.fechaDeCompra) }}</td>
+        <td>{{ orden.costoTotal | currency }}</td>
+        
+        <td>{{ ordenService.obtenerEstadoPedido(orden.estado) }}</td>
+        <td>{{ ordenService.obtenerMetodoPago(orden.metodoPago) }}</td>
+
+        <td>{{ ordenService.obtenerDireccion(orden.direccionDeEntrega) }}</td>
+        <td>{{ ordenService.obtenerServicioEntrega(orden.servicioDeEntrega) }}</td>
+        <td> 
+          <a [routerLink]="['detalles', orden.id]">
+              <button type="button" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+                </svg>
+              </button>
+            </a>
+        </td>
+        <td>
+          <a [routerLink]="['editar/', orden.id]">
+            <button type="button" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path
+                  d="M11.293 1.293a1 1 0 0 1 1.414 0l2 2a1
+                  1 0 0 1 0 1.414l-9 9a1 1 0 0 1-.39.242l-3
+                  1a1 1 0 0 1-1.297-1.297l1-3a1 1 0 0
+                  1 .242-.39l9-9zM12 5l-1-1L2 13l1
+                  1 9-9z">
+                </path>
+                <path
+                  fill-rule="evenodd"
+                  d="M13.854 3.646a.5.5 0 0
+                  0-.707 0L12 4.293l1.854 1.853a.5.5 0 0
+                  0 .708-.708L12.707 3.5l.147-.146a.5.5 0 0
+                  0 0-.708z">
+                </path>
+              </svg>
+            </button>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav aria-label="Producto Pages">
+    <ul class="pagination justify-content-center">
+      <li [class]="'page-item' + (currentPage == 1 ? ' disabled' : '')">
+        <button 
+          class="page-link" 
+          (click)="callGetOrdenes(currentPage - 1)" 
+          tabindex="-1"
+        >
+          Previous
+        </button>
+      </li>
+      <li 
+        *ngFor="let pageNumber of pageNumberArray; index as i;" 
+        [class]="'page-item ' + (pageNumber == currentPage ? 'active' : '')"
+      >
+        <button 
+          class="page-link" 
+          (click)="callGetOrdenes(pageNumber)"
+        >
+          {{ pageNumber }}
+        </button>
+      </li>
+      <li [class]="'page-item' + (currentPage == pageCount ? ' disabled' : '')">
+        <button 
+          class="page-link" 
+          (click)="callGetOrdenes(currentPage + 1)"
+        >
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
+
+
+</div>

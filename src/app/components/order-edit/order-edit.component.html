@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <h2>Edit Order</h2>
+    <form (ngSubmit)="saveOrder()">
+      <div class="form-group">
+        <label for="estado">Estado:</label>
+        <select id="estado" name="estado" [(ngModel)]="order.estado" class="form-control" required>
+          <option value="0">Carrito</option>
+          <option value="1">Creada</option>
+          <option value="2">Empacado</option>
+          <option value="3">En Centro de Envíos</option>
+          <option value="4">En Tránsito</option>
+          <option value="5">Recibido</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Confirmar</button>
+      <a [routerLink]="['/ordenes']" class="btn btn-secondary ml-2" style="margin-top: 1rem;">Cancelar</a>
+    </form>
+  </div>
+  

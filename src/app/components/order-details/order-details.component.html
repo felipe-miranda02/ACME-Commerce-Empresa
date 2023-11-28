@@ -1,0 +1,48 @@
+<div class="container">
+    <h2 style="margin: 1rem">Detalles de la Orden</h2>
+    <div class="card" style="margin-bottom: 1rem">
+      <div class="card-body">
+        <h4 class="card-title"><span style="font-weight: bold;">Orden id:</span> {{ orden.id }}</h4>
+        <p class="card-text"><span style="font-weight: bold;">Fecha de Compra:</span> {{ ordenService.obtenerFecha(orden.fechaDeCompra) }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Costo Total:</span>{{ orden.costoTotal | currency }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Estado:</span> {{ ordenService.obtenerEstadoPedido(orden.estado) }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Método de Pago:</span> {{ ordenService.obtenerMetodoPago(orden.metodoPago) }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Dirección de Entrega:</span> {{ ordenService.obtenerDireccion(orden.direccionDeEntrega) }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Servicio de Entrega:</span> {{ ordenService.obtenerServicioEntrega(orden.servicioDeEntrega) }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Costo de Entrega:</span> {{ orden.servicioDeEntrega.costo | currency }}</p>
+        <p class="card-text"><span style="font-weight: bold;">Huella de Carbono:</span> {{ orden.servicioDeEntrega.huellaDeCarbono }}</p>
+  
+        <h4 class="card-title" style="font-weight: bold;">Productos en la Orden</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+              <th>Detalles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let producto of orden.productoOrden">
+              <td>{{ producto.producto.titulo }}</td>
+              <td>{{ producto.cantidad }}</td>
+              <td>{{ producto.producto.precio | currency }}</td>
+              <td>{{ (producto.cantidad * producto.producto.precio) | currency }}</td>
+              <td>
+                <a [routerLink]="['/productos/detalles/', producto.producto.id]">
+                  <button type="button" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                      <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"></path>
+                      <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"></path>
+                    </svg>
+                  </button>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

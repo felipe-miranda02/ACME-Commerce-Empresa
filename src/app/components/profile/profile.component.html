@@ -1,0 +1,127 @@
+<div class="container">
+  <div class="container">
+    <div class="position-relative">
+      <img
+        [src]="bannerImage"
+        class="img-fluid banner-image"
+        alt="Banner Image"
+        (error)="onBannerImageError()"
+      />
+      <div class="rounded-circle profile-picture-container">
+        <img
+          [src]="image"
+          class="rounded-circle profile-picture"
+          alt="Profile Image"
+          (error)="onProfileImageError()"
+        />
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ empresa.nombre }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h4>Editar Empresa</h4>
+    <form [formGroup]="empresaForm" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input
+                type="text"
+                formControlName="nombre"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="uri">URI:</label>
+              <input
+                type="text"
+                formControlName="uri"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="image">Image:</label>
+              <input
+                type="file"
+                accept="image/*"
+                class="form-control"
+                (change)="onImageUploaded($event, 'Image')"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group" formGroupName="lookAndFeel">
+              <label for="imagenBanner">Imagen Banner:</label>
+              <input
+                type="file"
+                accept="image/*"
+                class="form-control"
+                (change)="onImageUploaded($event, 'ImagenBanner')"
+              />
+            </div>
+            <div class="form-group" formGroupName="lookAndFeel">
+              <label for="paletaDeColores">Color Palette:</label>
+              <select
+                formControlName="paletaDeColores"
+                class="form-select"
+                required
+              >
+                <option
+                  *ngFor="let color of colorOptions"
+                  [value]="color.name"
+                  [selected]="color.name == colorActual ? 'selected' : ''"
+                >
+                  {{ color.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mt-3 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" #successModal>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Datos actualizados</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onCloseClicked()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Los datos han sido guardados correctamente.</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onCloseClicked()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

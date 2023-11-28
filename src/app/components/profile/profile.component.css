@@ -1,0 +1,31 @@
+.position-relative {
+    position: relative;
+  }
+  
+  .banner-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover; /* Ensure the banner image covers the container */
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  .profile-picture-container {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    background-color: white;
+    width: 100px; /* Adjust the size as needed */
+    height: 100px; /* Adjust the size as needed */
+  }
+  
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .card {
+    margin-top: -75px; /* Half of the profile picture container height */
+  }

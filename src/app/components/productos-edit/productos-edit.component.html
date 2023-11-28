@@ -1,0 +1,176 @@
+<div class="container">
+    <h2 style="margin: 1rem;">Editar Producto</h2>
+    <form (ngSubmit)="editarProducto()" #productoForm="ngForm">
+      <div class="form-group"> 
+        <label for="imagen" style="margin-top: 1rem;">Imagen:</label>   
+        <input
+            class="form-control" 
+            id="imagen" 
+            name="imagen"  
+            #file
+            type="file"
+            (change)="onImageUploaded($event)"
+            accept=".png, .jpg, .jpeg, .gif"
+            required
+        />
+      </div>
+      <div class="form-group">
+        <label for="titulo" style="margin-top: 1rem;">Título:</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" [(ngModel)]="producto.titulo" required>
+      </div>
+      <div class="form-group">
+        <label for="descripcion" style="margin-top: 1rem;">Descripción:</label>
+        <textarea class="form-control" id="descripcion" name="descripcion" [(ngModel)]="producto.descripcion" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="precio" style="margin-top: 1rem;">Precio:</label>
+        <input type="number" class="form-control" id="precio" name="precio" [(ngModel)]="producto.precio" required min="0.01">
+      </div>
+      <div class="form-check" style="margin-top: 1rem;">
+        <input type="checkbox" class="form-check-input" id="embalajeReciclable" name="embalajeReciclable" [(ngModel)]="producto.embalajeReciclable">
+        <label class="form-check-label" for="embalajeReciclable">Embalaje Reciclable</label>
+      </div>
+      <div class="form-check" style="margin-top: 1rem;">
+        <input type="checkbox" class="form-check-input" id="productoReciclable" name="productoReciclable" [(ngModel)]="producto.productoReciclable">
+        <label class="form-check-label" for="productoReciclable">Producto Reciclable</label>
+      </div>
+      <div class="form-check" style="margin-top: 1rem;">
+        <input type="checkbox" class="form-check-input" id="fabricacionResponsable" name="fabricacionResponsable" [(ngModel)]="producto.fabricacionResponsable">
+        <label class="form-check-label" for="fabricacionResponsable">Fabricación Responsable</label>
+      </div>
+      
+      <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Confirmar</button>
+    </form>
+    
+    <h2 style="margin: 1rem;">Agregar Producto UpSelling</h2>
+    <div style="margin: 1rem;">
+        <ul>
+            <li *ngFor="let upSelling of producto.upSelling">
+                {{upSelling.titulo}}
+            </li>
+        </ul>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Agregar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productosUp">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.titulo }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="agregarUpSelling(producto.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0"/>
+              </svg>
+            </button>
+          </td>    
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Producto Pages">
+      <ul class="pagination justify-content-center">
+        <li [class]="'page-item' + (currentPageUp == 1 ? ' disabled' : '')">
+          <button 
+            class="page-link" 
+            (click)="callGetProductosUp(currentPageUp - 1)" 
+            tabindex="-1"
+          >
+            Previous
+          </button>
+        </li>
+        <li 
+          *ngFor="let pageNumber of pageNumberArrayUp; index as i;" 
+          [class]="'page-item ' + (pageNumber == currentPageUp ? 'active' : '')"
+        >
+          <button 
+            class="page-link" 
+            (click)="callGetProductosUp(pageNumber)"
+          >
+            {{ pageNumber }}
+          </button>
+        </li>
+        <li [class]="'page-item' + (currentPageUp == pageCountUp
+         ? ' disabled' : '')">
+          <button 
+            class="page-link" 
+            (click)="callGetProductosUp(currentPageUp + 1)"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <h2 style="margin: 1rem;">Agregar Producto CrossSelling</h2>
+    <div style="margin: 1rem;">
+        <ul>
+            <li *ngFor="let crossSelling of producto.crossSelling">
+                {{crossSelling.titulo}}
+            </li>
+        </ul>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nombre</th>
+          <th>Agregar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productosCross">
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.titulo }}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="agregarCrossSelling(producto.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
+                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0"/>
+              </svg>
+            </button>
+          </td>    
+        </tr>
+      </tbody>
+    </table>
+    <nav aria-label="Producto Pages">
+      <ul class="pagination justify-content-center">
+        <li [class]="'page-item' + (currentPageCross == 1 ? ' disabled' : '')">
+          <button 
+            class="page-link" 
+            (click)="callGetProductosCross(currentPageCross - 1)" 
+            tabindex="-1"
+          >
+            Previous
+          </button>
+        </li>
+        <li 
+          *ngFor="let pageNumber of pageNumberArrayCross; index as i;" 
+          [class]="'page-item ' + (pageNumber == currentPageCross ? 'active' : '')"
+        >
+          <button 
+            class="page-link" 
+            (click)="callGetProductosCross(pageNumber)"
+          >
+            {{ pageNumber }}
+          </button>
+        </li>
+        <li [class]="'page-item' + (currentPageCross == pageCountCross
+         ? ' disabled' : '')">
+          <button 
+            class="page-link" 
+            (click)="callGetProductosCross(currentPageCross + 1)"
+          >
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+
+  </div>
+  

@@ -1,0 +1,96 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <h6><a class="navbar-brand" [routerLink]="['/']">Empresa</a></h6>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div *ngIf="isUserAuthenticated" class="d-flex">
+          <li class="nav-item">
+            <h6>
+              <a
+                class="nav-link"
+                aria-current="page"
+                [routerLink]="['/ordenes']"
+              >
+                Ordenes
+              </a>
+            </h6>
+          </li>
+          <li class="nav-item">
+            <h6>
+              <a
+                class="nav-link"
+                aria-current="page"
+                [routerLink]="['/productos']"
+              >
+                Productos
+              </a>
+            </h6>
+          </li>
+          <li class="nav-item">
+            <h6>
+              <a
+                class="nav-link"
+                aria-current="page"
+                [routerLink]="['/reportes']"
+              >
+                Reportes
+              </a>
+            </h6>
+          </li>
+          <li class="nav-item">
+            <h6>
+              <a
+                class="nav-link"
+                aria-current="page"
+                [routerLink]="['/direcciones']"
+              >
+                Direcciones
+              </a>
+            </h6>
+          </li>
+          <li class="nav-item">
+            <h6>
+              <a
+                class="nav-link"
+                aria-current="page"
+                [routerLink]="['/servicio-entrega']"
+              >
+                Servicio Entrega
+              </a>
+            </h6>
+          </li>
+        </div>
+      </ul>
+      <ul *ngIf="isUserAuthenticated" class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button 
+            class="nav-link"
+            [routerLink]="['/profile']"
+          >
+            <i class="bi bi-person-circle"></i>{{ username }}
+          </button>
+        </li>
+        <li>
+          <button
+            class="btn btn-outline-danger"
+            [routerLink]="['/login']"
+            (click)="logout()"
+          >
+            Cerrar sesion
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

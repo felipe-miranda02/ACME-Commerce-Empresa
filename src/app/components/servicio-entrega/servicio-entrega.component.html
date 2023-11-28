@@ -1,0 +1,240 @@
+<div class="d-md-flex align-items-stretch">
+  <div class="container mt-5 mb-5">
+    <h2 style="margin: 1rem">Servicios De Entrega</h2>
+
+    <div class="d-flex justify-content-center row">
+      <div class="col-md-10">
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#servicioDeEntregaModal"
+          (click)="servicioEntregaId = -1; servicioEntregaForm.reset()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-plus-circle"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+            />
+          </svg>
+          Nuevo
+        </button>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Nombre</th>
+              <th>Costo</th>
+              <th>Velocidad</th>
+              <th>Seguimiento</th>
+              <th>Huella De Carbono</th>
+              <th>Editar</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let servicioEntrega of serviciosDeEntrega">
+              <td>{{ servicioEntrega.id }}</td>
+              <td>{{ servicioEntrega.nombre }}</td>
+              <td>{{ servicioEntrega.costo | currency }}</td>
+              <td>{{ servicioEntrega.velocidad }}</td>
+              <td>{{ servicioEntrega.seguimiento }}</td>
+              <td>
+                {{ getHuellaCarbonoValue(servicioEntrega.huellaDeCarbono) }}
+              </td>
+
+              <td>
+                <a>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#servicioDeEntregaModal"
+                    (click)="getServicioDeEntrega(servicioEntrega.id)"
+                    #servicioDeEntregaModalId
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-pencil-square"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                      />
+                    </svg>
+                  </button>
+                </a>
+              </td>
+
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  (click)="eliminarServicioDeEntrega(servicioEntrega.id)"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"
+                    />
+                    <path
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"
+                    />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="servicioDeEntregaModal"
+          tabindex="-1"
+          aria-labelledby="servicioDeEntregaModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="servicioDeEntregaModalLabel">
+                  Servicio de Entrega
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  id="closeBtn"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="servicioEntregaId = -1"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form
+                  [formGroup]="servicioEntregaForm"
+                  (ngSubmit)="
+                    servicioEntregaId > 0
+                      ? editarServicioDeEntrega(servicioEntregaForm.value)
+                      : crearServicioDeEntrega(servicioEntregaForm.value)
+                  "
+                >
+                  <!-- Input 1 Nombre -->
+                  <div class="mb-3">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="Nombre"
+                      placeholder="Envio Express"
+                      formControlName="nombre"
+                    />
+                  </div>
+
+                  <!-- Input 2 Costo -->
+                  <div class="mb-3">
+                    <label for="costo" class="form-label">Costo</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="costo"
+                      placeholder="100"
+                      min="0"
+                      formControlName="costo"
+                    />
+                  </div>
+
+                  <!-- Input 3 Velocidad -->
+                  <div class="mb-3">
+                    <label for="velocidad" class="form-label">Velocidad</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="velocidad"
+                      placeholder="2 dias"
+                      formControlName="velocidad"
+                    />
+                  </div>
+
+                  <!-- Input 4 seguimiento -->
+                  <div class="mb-3">
+                    <label for="seguimiento" class="form-label">
+                      Seguimiento
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="seguimiento"
+                      placeholder="id de seguimiento"
+                      formControlName="seguimiento"
+                    />
+                  </div>
+
+                  <!-- Input 5 huella de carbono -->
+                  <div class="mb-3">
+                    <label for="huellaDeCarbono" class="form-label">
+                      Huella de carbono
+                    </label>
+                    <select
+                      type="text"
+                      class="form-control"
+                      id="huellaDeCarbono"
+                      name="huellaDeCarbono"
+                      formControlName="huellaDeCarbono"
+                      aria-placeholder="seleccionar"
+                      required
+                    >
+                      <option *ngFor="let hC of huellasCarbono" [value]="hC">
+                        {{ getHuellaCarbonoValue(hC) }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="!servicioEntregaForm.valid"
+                    >
+                      Guardar Cambios
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
